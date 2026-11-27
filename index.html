@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>USC Pre-Law &amp; AI Pathway Suggestor</title>
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Inter Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+          },
+          colors: {
+            usc: {
+              cardinal: '#990000',
+              cardinalDark: '#7A0000',
+              gold: '#FFCC00',
+              goldDark: '#D9A700',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Custom subtle range slider styling */
+    input[type="range"] {
+      accent-color: #990000;
+    }
+    .fade-in-up {
+      animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans antialiased selection:bg-usc-gold/30 selection:text-usc-cardinal">
+
+  <!-- Top USC Cardinal Accent Bar -->
+  <div class="h-1.5 w-full bg-gradient-to-r from-usc-cardinal via-usc-cardinal to-usc-gold"></div>
+
+  <!-- Header -->
+  <header class="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-usc-cardinal text-usc-gold flex items-center justify-center font-extrabold text-lg shadow-sm shrink-0">
+          SC
+        </div>
+        <div>
+          <h1 class="text-lg sm:text-xl font-bold tracking-tight text-slate-900 leading-tight">
+            USC Pre-Law &amp; AI Pathway Suggestor
+          </h1>
+          <p class="text-xs sm:text-sm text-slate-500">
+            Non-CS/DS Degree, ROI &amp; 3-Year Graduation Optimizer
+          </p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2.5">
+        <span class="hidden md:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+          2026–2027 USC Catalog
+        </span>
+        <button
+          id="openDeployModalBtn"
+          type="button"
+          class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 border border-slate-200 transition-colors cursor-pointer"
+        >
+          <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+          </svg>
+          Deploy to DigitalOcean
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Grid -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
+
+      <!-- LEFT COLUMN: Configuration Panel -->
+      <section class="lg:col-span-4 space-y-5 lg:sticky lg:top-24">
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 sm:p-6 space-y-6">
+          <!-- Student Profile Presets -->
+          <div>
+            <h2 class="text-sm font-bold uppercase tracking-wider text-slate-500 mb-3">
+              Student Profile Constraints
+            </h2>
+            <div class="flex flex-wrap gap-2">
+              <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-red-50 text-usc-cardinal border border-red-200">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" /></svg>
+                Pre-Law Focus
+              </span>
+              <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 border border-slate-200">
+                <svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" /></svg>
+                No CS / Data Science
+              </span>
+              <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-amber-50 text-amber-800 border border-amber-200">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                Accessible AI Only
+              </span>
+            </div>
+          </div>
+
+          <hr class="border-slate-100" />
+
+          <!-- Incoming AP Credits Control -->
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <label for="apCreditsSlider" class="text-sm font-semibold text-slate-800">
+                Incoming AP / IB Credits
+              </label>
+              <div class="flex items-center gap-1.5">
+                <input
+                  id="apCreditsInput"
+                  type="number"
+                  min="0"
+                  max="80"
+                  value="60"
+                  class="w-16 px-2 py-1 text-right text-sm font-bold text-usc-cardinal bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-usc-cardinal/30"
+                />
+                <span class="text-xs font-medium text-slate-500">units</span>
+              </div>
+            </div>
+            <input
+              id="apCreditsSlider"
+              type="range"
+              min="0"
+              max="80"
+              step="4"
+              value="60"
+              class="w-full h-2 bg-slate-200 rounded-lg cursor-pointer"
+            />
+            <div class="flex justify-between text-[11px] text-slate-400 mt-1">
+              <span>0</span>
+              <span>32 (USC Cap)</span>
+              <span>60</span>
+              <span>80</span>
+            </div>
+
+            <!-- Dynamic USC 32-Unit Cap Callout -->
+            <div id="apPolicyCallout" class="mt-3 p-3.5 rounded-xl bg-amber-50/90 border border-amber-200/90 text-xs text-amber-950 space-y-1.5">
+              <div class="flex items-center gap-1.5 font-bold text-amber-900">
+                <svg class="w-4 h-4 text-amber-600 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                USC Official 32-Unit AP Cap
+              </div>
+              <p id="apPolicyText" class="leading-relaxed text-amber-900/90">
+                USC caps incoming AP/IB exam credit at <strong>32 units</strong> toward the 128-unit degree. Your remaining <strong>28 AP credits</strong> still add major value via <strong>GE fulfillment, Foreign Language clearance, and prerequisite waivers</strong>—letting you jump straight into upper-division classes and graduate in 3 years.
+              </p>
+            </div>
+          </div>
+
+          <hr class="border-slate-100" />
+
+          <!-- Optimization Priority Weights -->
+          <div class="space-y-4">
+            <div class="flex items-center justify-between">
+              <h2 class="text-sm font-bold uppercase tracking-wider text-slate-500">
+                Optimization Priorities
+              </h2>
+              <div class="flex gap-1">
+                <button type="button" data-preset="balanced" class="preset-btn px-2 py-1 text-[11px] font-semibold rounded-md bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors cursor-pointer">Balanced</button>
+                <button type="button" data-preset="fast" class="preset-btn px-2 py-1 text-[11px] font-semibold rounded-md bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors cursor-pointer">3-Yr Fast</button>
+                <button type="button" data-preset="roi" class="preset-btn px-2 py-1 text-[11px] font-semibold rounded-md bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors cursor-pointer">Max ROI</button>
+              </div>
+            </div>
+
+            <!-- Weight 1: Faster Graduation -->
+            <div>
+              <div class="flex justify-between text-xs font-medium mb-1">
+                <span class="text-slate-700">Faster Graduation (3-Year Track)</span>
+                <span id="valFastGrad" class="font-bold text-usc-cardinal">8 / 10</span>
+              </div>
+              <input id="weightFastGrad" type="range" min="1" max="10" value="8" class="w-full h-1.5 bg-slate-200 rounded-lg cursor-pointer" />
+            </div>
+
+            <!-- Weight 2: Post-Grad Salary / ROI -->
+            <div>
+              <div class="flex justify-between text-xs font-medium mb-1">
+                <span class="text-slate-700">Post-Grad Salary / ROI ($ Value)</span>
+                <span id="valRoi" class="font-bold text-usc-cardinal">9 / 10</span>
+              </div>
+              <input id="weightRoi" type="range" min="1" max="10" value="9" class="w-full h-1.5 bg-slate-200 rounded-lg cursor-pointer" />
+            </div>
+
+            <!-- Weight 3: Internship Readiness -->
+            <div>
+              <div class="flex justify-between text-xs font-medium mb-1">
+                <span class="text-slate-700">Internship Pipeline &amp; Readiness</span>
+                <span id="valInternship" class="font-bold text-usc-cardinal">9 / 10</span>
+              </div>
+              <input id="weightInternship" type="range" min="1" max="10" value="9" class="w-full h-1.5 bg-slate-200 rounded-lg cursor-pointer" />
+            </div>
+
+            <!-- Weight 4: Easy / Accessible AI -->
+            <div>
+              <div class="flex justify-between text-xs font-medium mb-1">
+                <span class="text-slate-700">Easy / No-Code AI Coursework</span>
+                <span id="valAi" class="font-bold text-usc-cardinal">8 / 10</span>
+              </div>
+              <input id="weightAi" type="range" min="1" max="10" value="8" class="w-full h-1.5 bg-slate-200 rounded-lg cursor-pointer" />
+            </div>
+          </div>
+
+          <!-- Primary CTA Button -->
+          <button
+            id="suggestBtn"
+            type="button"
+            class="w-full py-3.5 px-5 rounded-xl bg-usc-cardinal hover:bg-usc-cardinalDark active:scale-[0.99] text-white font-bold text-sm sm:text-base shadow-md shadow-usc-cardinal/20 transition-all flex items-center justify-center gap-2 cursor-pointer"
+          >
+            <svg class="w-5 h-5 text-usc-gold" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+            </svg>
+            Suggest Optimal Pathway
+          </button>
+        </div>
+      </section>
+
+      <!-- RIGHT COLUMN: Dynamic Results Dashboard -->
+      <section id="resultsDashboard" class="lg:col-span-8 space-y-6">
+
+        <!-- 1. Top Recommended Major + AI Track Hero Card -->
+        <div id="topRecommendationCard" class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+          <!-- Populated dynamically via JS -->
+        </div>
+
+        <!-- 2. Graduation Timeline & AP Credit Optimizer -->
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 sm:p-6 space-y-5">
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+            <div>
+              <h3 class="text-base sm:text-lg font-bold text-slate-900">
+                Graduation Timeline &amp; AP Credit Optimizer
+              </h3>
+              <p class="text-xs sm:text-sm text-slate-500">
+                128 total semester units required for a USC bachelor's degree
+              </p>
+            </div>
+            <span id="projectedGradBadge" class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 self-start sm:self-auto">
+              3-Year Track (6 Semesters)
+            </span>
+          </div>
+
+          <!-- Visual Progress Bar -->
+          <div class="space-y-2">
+            <div class="flex justify-between text-xs font-semibold">
+              <span class="text-amber-700" id="barApLabel">32 AP Units Applied (25%)</span>
+              <span class="text-usc-cardinal" id="barRemLabel">96 Units Remaining at USC (75%)</span>
+            </div>
+            <div class="w-full h-4 bg-slate-100 rounded-full overflow-hidden flex border border-slate-200">
+              <div id="barApFill" class="h-full bg-usc-gold transition-all duration-500" style="width: 25%"></div>
+              <div id="barRemFill" class="h-full bg-usc-cardinal transition-all duration-500" style="width: 75%"></div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+              <div class="p-3 rounded-xl bg-slate-50 border border-slate-200/80">
+                <div class="text-[11px] font-semibold uppercase tracking-wider text-slate-500">Applied AP Units</div>
+                <div id="statApApplied" class="text-lg font-extrabold text-slate-900 mt-0.5">32 units</div>
+                <div class="text-[11px] text-slate-500">Max allowed toward 128</div>
+              </div>
+              <div class="p-3 rounded-xl bg-amber-50/60 border border-amber-200/70">
+                <div class="text-[11px] font-semibold uppercase tracking-wider text-amber-800">Waiver / GE Credits</div>
+                <div id="statApWaivers" class="text-lg font-extrabold text-amber-900 mt-0.5">28 credits</div>
+                <div class="text-[11px] text-amber-800/80">Clears GEs, Lang &amp; Prereqs</div>
+              </div>
+              <div class="p-3 rounded-xl bg-red-50/50 border border-red-200/70">
+                <div class="text-[11px] font-semibold uppercase tracking-wider text-usc-cardinal">Remaining Load</div>
+                <div id="statUnitsRemaining" class="text-lg font-extrabold text-usc-cardinal mt-0.5">96 units</div>
+                <div id="statSemestersNeeded" class="text-[11px] text-slate-600">6 semesters @ 16 units/term</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3-Year (6-Semester) Sample Roadmap -->
+          <div class="pt-2">
+            <h4 class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-3">
+              Projected 3-Year (6-Semester) Graduation Plan
+            </h4>
+            <div id="semesterPlanGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+              <!-- Populated dynamically via JS -->
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Recommended Easy / Accessible AI Coursework & Minors -->
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 sm:p-6 space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <div>
+              <h3 class="text-base sm:text-lg font-bold text-slate-900">
+                Curated No-Code AI Coursework &amp; Minors
+              </h3>
+              <p class="text-xs sm:text-sm text-slate-500">
+                High-value USC AI credentials requiring zero heavy programming
+              </p>
+            </div>
+            <!-- Filter Pills -->
+            <div class="flex flex-wrap gap-1.5" id="aiFilterGroup">
+              <button type="button" data-filter="all" class="ai-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-usc-cardinal text-white transition-colors cursor-pointer">All</button>
+              <button type="button" data-filter="essentials" class="ai-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition-colors cursor-pointer">2-Unit CR/NC</button>
+              <button type="button" data-filter="minor" class="ai-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition-colors cursor-pointer">Minors</button>
+              <button type="button" data-filter="elective" class="ai-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition-colors cursor-pointer">4-Unit Electives</button>
+            </div>
+          </div>
+
+          <div id="aiCoursesGrid" class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+            <!-- Populated dynamically via JS -->
+          </div>
+        </div>
+
+        <!-- 4. Side-by-Side Comparison Table of All 5 Non-CS/DS Majors -->
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+          <div class="p-5 sm:p-6 border-b border-slate-100">
+            <h3 class="text-base sm:text-lg font-bold text-slate-900">
+              Side-by-Side Comparison: Non-CS/DS Pre-Law Majors
+            </h3>
+            <p class="text-xs sm:text-sm text-slate-500 mt-0.5">
+              Ranked dynamically by your current optimization weights. Click any row to preview it as your top pathway.
+            </p>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="bg-slate-50 border-b border-slate-200 text-[11px] font-bold uppercase tracking-wider text-slate-500">
+                  <th class="py-3 px-4">Major &amp; School</th>
+                  <th class="py-3 px-3 text-center">Units</th>
+                  <th class="py-3 px-3">Est. Starting Salary</th>
+                  <th class="py-3 px-3">Grad Time</th>
+                  <th class="py-3 px-3">Internship Pipeline</th>
+                  <th class="py-3 px-3">LSAT / Law Prep</th>
+                  <th class="py-3 px-4 text-right">Match</th>
+                </tr>
+              </thead>
+              <tbody id="comparisonTableBody" class="divide-y divide-slate-100 text-xs sm:text-sm">
+                <!-- Populated dynamically via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </section>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center text-xs text-slate-400">
+    <p>
+      USC Pre-Law &amp; AI Pathway Suggestor &bull; Built for DigitalOcean App Platform (Static Site) &bull; Verify final degree requirements with your USC academic advisor.
+    </p>
+  </footer>
+
+  <!-- DigitalOcean Deployment Modal -->
+  <div id="deployModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4">
+    <div class="bg-white rounded-2xl border border-slate-200 shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+      <div class="flex items-center justify-between p-5 border-b border-slate-100">
+        <div class="flex items-center gap-2.5">
+          <div class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-base font-bold text-slate-900">Deploy to DigitalOcean App Platform</h3>
+            <p class="text-xs text-slate-500">Free-tier eligible Static Site deployment via GitHub</p>
+          </div>
+        </div>
+        <button id="closeDeployModalBtn" type="button" class="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors cursor-pointer">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+        </button>
+      </div>
+
+      <div class="p-5 sm:p-6 space-y-5 text-sm text-slate-700">
+        <ol class="space-y-4 list-decimal list-inside">
+          <li class="space-y-2">
+            <span class="font-semibold text-slate-900">Push this single <code class="px-1.5 py-0.5 bg-slate-100 rounded text-xs font-mono">index.html</code> file to a GitHub repository:</span>
+            <div class="relative mt-1.5">
+              <pre id="gitCommandsBlock" class="p-3.5 rounded-xl bg-slate-900 text-slate-100 text-xs font-mono overflow-x-auto leading-relaxed">mkdir usc-prelaw-suggestor &amp;&amp; cd usc-prelaw-suggestor
+# Save this file as index.html in this folder
+git init
+git add index.html
+git commit -m "Initial commit: USC Pre-Law &amp; AI Pathway Suggestor"
+git branch -M main
+git remote add origin https://github.com/YOUR_USERNAME/usc-prelaw-suggestor.git
+git push -u origin main</pre>
+              <button type="button" data-copy-target="gitCommandsBlock" class="copy-btn absolute top-2.5 right-2.5 px-2.5 py-1 rounded-md bg-slate-700 hover:bg-slate-600 text-white text-[11px] font-semibold transition-colors cursor-pointer">
+                Copy
+              </button>
+            </div>
+          </li>
+
+          <li class="space-y-1">
+            <span class="font-semibold text-slate-900">Create a Static Site in DigitalOcean:</span>
+            <p class="text-xs text-slate-600 pl-5">
+              Log into the <strong>DigitalOcean Cloud Console</strong> &rarr; click <strong>App Platform</strong> &rarr; <strong>Create App</strong> &rarr; connect your GitHub repository (<code class="px-1 bg-slate-100 rounded">usc-prelaw-suggestor</code>) on branch <code class="px-1 bg-slate-100 rounded">main</code>.
+            </p>
+          </li>
+
+          <li class="space-y-1">
+            <span class="font-semibold text-slate-900">Configure as a Static Site (Starter / Free Tier):</span>
+            <p class="text-xs text-slate-600 pl-5">
+              DigitalOcean auto-detects <code class="px-1 bg-slate-100 rounded">index.html</code> as a Static Site. Leave the Build Command blank, set Output Directory to <code class="px-1 bg-slate-100 rounded">/</code>, and click <strong>Create Resources</strong>.
+            </p>
+          </li>
+
+          <li class="space-y-2">
+            <span class="font-semibold text-slate-900">Optional: One-click <code class="px-1.5 py-0.5 bg-slate-100 rounded text-xs font-mono">.do/app.yaml</code> spec:</span>
+            <div class="relative mt-1.5">
+              <pre id="doYamlBlock" class="p-3.5 rounded-xl bg-slate-900 text-slate-100 text-xs font-mono overflow-x-auto leading-relaxed">name: usc-prelaw-ai-suggestor
+static_sites:
+  - name: web
+    github:
+      repo: YOUR_USERNAME/usc-prelaw-suggestor
+      branch: main
+      deploy_on_push: true
+    index_document: index.html</pre>
+              <button type="button" data-copy-target="doYamlBlock" class="copy-btn absolute top-2.5 right-2.5 px-2.5 py-1 rounded-md bg-slate-700 hover:bg-slate-600 text-white text-[11px] font-semibold transition-colors cursor-pointer">
+                Copy
+              </button>
+            </div>
+          </li>
+        </ol>
+      </div>
+
+      <div class="p-4 border-t border-slate-100 bg-slate-50 flex justify-end rounded-b-2xl">
+        <button id="doneDeployModalBtn" type="button" class="px-4 py-2 rounded-xl bg-usc-cardinal hover:bg-usc-cardinalDark text-white text-xs font-bold transition-colors cursor-pointer">
+          Got it
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Application Data & Logic -->
+  <script>
+    // =========================================================================
+    // 1. CURATED USC NON-CS/DS MAJORS & ACCESSIBLE AI COURSEWORK CATALOG
+    // =========================================================================
+    const USC_MAJORS = [
+      {
+        id: 'econ',
+        name: 'Economics (B.A.)',
+        school: 'USC Dornsife',
+        units: 48,
+        startingSalary: '$78,000 – $95,000',
+        salaryNumeric: 86500,
+        roiScore: 9.2,
+        fastGradScore: 9.4,
+        internshipScore: 8.8,
+        aiFitScore: 9.0,
+        lsatPrep: 'Top-Tier (Analytical & Logic)',
+        internships: 'Corporate Law, Antitrust, Consulting, Legal Tech',
+        recommendedAiTrack: 'Law and Regulation of AI Minor (20 units) + BUAD 298',
+        summary: 'Ideal balance of high post-grad ROI, top LSAT analytical preparation, and a lean 48-unit requirement that pairs seamlessly with a 3-year graduation track and an AI minor.',
+        samplePlan: [
+          { term: 'Year 1 Fall', load: '16u', courses: 'ECON 203, WRIT 150, LAW 210p, TAC 298 (CR/NC)' },
+          { term: 'Year 1 Spring', load: '16u', courses: 'ECON 205, ECON 303, GE / Elective, BUAD 298 (CR/NC)' },
+          { term: 'Year 2 Fall', load: '16u', courses: 'ECON 305, ECON 317, LAW 306 (AI in Law), Elective' },
+          { term: 'Year 2 Spring', load: '16u', courses: 'ECON Upper-Div (x2), LAW 206 (AI Ethics), PHIL 265g' },
+          { term: 'Year 3 Fall', load: '16u', courses: 'ECON Upper-Div (x2), WRIT 340, LAW 207 (Data Privacy)' },
+          { term: 'Year 3 Spring', load: '16u', courses: 'ECON Capstone, Upper-Div Electives, LSAT Prep' }
+        ]
+      },
+      {
+        id: 'buad',
+        name: 'Business Administration (B.S.)',
+        school: 'USC Marshall',
+        units: 64,
+        startingSalary: '$82,000 – $105,000',
+        salaryNumeric: 93500,
+        roiScore: 9.8,
+        fastGradScore: 7.4,
+        internshipScore: 9.8,
+        aiFitScore: 9.2,
+        lsatPrep: 'Strong (Corporate & M&A Law)',
+        internships: 'BigLaw Corporate, Finance, Tech Strategy, Compliance',
+        recommendedAiTrack: 'Applied AI in Business Minor + BUAD 298 & LAW 306',
+        summary: 'Highest direct post-graduation salary and unmatched Trojan Network internship pipeline. Slightly heavier 64-unit major load, making AP waivers essential for a 3-year finish.',
+        samplePlan: [
+          { term: 'Year 1 Fall', load: '16u', courses: 'ECON 351, BUAD 280, WRIT 150, BUAD 298 (CR/NC)' },
+          { term: 'Year 1 Spring', load: '16u', courses: 'ECON 352, BUAD 281, BUAD 304, TAC 298 (CR/NC)' },
+          { term: 'Year 2 Fall', load: '16u', courses: 'BUAD 306, BUAD 307, BUAD 310, LAW 210p' },
+          { term: 'Year 2 Spring', load: '16u', courses: 'BUAD 311, BUAD 302, Marshall AI Elective, GE' },
+          { term: 'Year 3 Fall', load: '16u', courses: 'BUAD 497, WRIT 340, LAW 306 (AI in Law), Upper-Div' },
+          { term: 'Year 3 Spring', load: '16u', courses: 'Marshall Upper-Div (x3), EIS 370 (AI Ethics)' }
+        ]
+      },
+      {
+        id: 'legal',
+        name: 'Legal Studies (B.S.)',
+        school: 'USC Gould School of Law',
+        units: 48,
+        startingSalary: '$68,000 – $84,000',
+        salaryNumeric: 76000,
+        roiScore: 8.1,
+        fastGradScore: 9.3,
+        internshipScore: 9.1,
+        aiFitScore: 9.6,
+        lsatPrep: 'Direct Legal Foundation',
+        internships: 'BigLaw Paralegal, Legal Ops, AI Governance, Courts',
+        recommendedAiTrack: 'Law & AI Concentration + TAC 298, BUAD 298 & EIS 370',
+        summary: 'Taught directly by USC Gould Law faculty. Offers direct access to AI regulation courses (LAW 306, LAW 206) and law-firm internships while keeping a flexible 48-unit structure.',
+        samplePlan: [
+          { term: 'Year 1 Fall', load: '16u', courses: 'LAW 210p, WRIT 150, GE, TAC 298 (CR/NC)' },
+          { term: 'Year 1 Spring', load: '16u', courses: 'LAW 206 (AI Ethics), LAW 211 (IP & Tech), BUAD 298' },
+          { term: 'Year 2 Fall', load: '16u', courses: 'LAW 306 (AI in Law), LAW Core, PHIL 265g, Elective' },
+          { term: 'Year 2 Spring', load: '16u', courses: 'LAW 207 (Personal Data), LAW 407, Upper-Div Elective' },
+          { term: 'Year 3 Fall', load: '16u', courses: 'LAW Seminar, WRIT 340, EIS 370, Internship Credit' },
+          { term: 'Year 3 Spring', load: '16u', courses: 'LAW Capstone, Upper-Div Electives, LSAT Prep' }
+        ]
+      },
+      {
+        id: 'ppl',
+        name: 'Philosophy, Politics, and Law (B.A.)',
+        school: 'USC Dornsife',
+        units: 44,
+        startingSalary: '$65,000 – $80,000',
+        salaryNumeric: 72500,
+        roiScore: 7.7,
+        fastGradScore: 9.8,
+        internshipScore: 8.0,
+        aiFitScore: 8.7,
+        lsatPrep: 'Elite (Highest Avg LSAT)',
+        internships: 'Policy Think Tanks, Legal Advocacy, AI Ethics',
+        recommendedAiTrack: 'Law and Regulation of AI Minor (20 units) + MDA 298',
+        summary: 'The classic, lightest-unit pre-law powerhouse (44 units). Effortlessly supports a 3-year graduation with room for both an AI minor and dedicated LSAT preparation.',
+        samplePlan: [
+          { term: 'Year 1 Fall', load: '16u', courses: 'PHIL 140, POSC 130, WRIT 150, MDA 298 (CR/NC)' },
+          { term: 'Year 1 Spring', load: '16u', courses: 'LAW 210p, PHIL 265g (Tech Ethics), TAC 298 (CR/NC)' },
+          { term: 'Year 2 Fall', load: '16u', courses: 'PPL Core (x2), LAW 306 (AI in Law), BUAD 298' },
+          { term: 'Year 2 Spring', load: '16u', courses: 'PPL Upper-Div (x2), LAW 206, LAW 207' },
+          { term: 'Year 3 Fall', load: '16u', courses: 'PPL Seminar, WRIT 340, EIS 370, Elective' },
+          { term: 'Year 3 Spring', load: '16u', courses: 'PPL Capstone, Upper-Div Electives, LSAT Prep' }
+        ]
+      },
+      {
+        id: 'ppd',
+        name: 'Public Policy (B.S.)',
+        school: 'USC Price School',
+        units: 52,
+        startingSalary: '$70,000 – $86,000',
+        salaryNumeric: 78000,
+        roiScore: 8.3,
+        fastGradScore: 8.8,
+        internshipScore: 8.9,
+        aiFitScore: 8.8,
+        lsatPrep: 'Strong (Regulatory & Gov Law)',
+        internships: 'Tech Policy, Government Affairs, Regulatory Compliance',
+        recommendedAiTrack: 'Law and Regulation of AI Minor (20 units) + BUAD 298',
+        summary: 'Built for students targeting tech regulation, government affairs, and public-sector legal internships, with practical policy lab coursework and strong DC/LA placement.',
+        samplePlan: [
+          { term: 'Year 1 Fall', load: '16u', courses: 'PPD 225, ECON 203, WRIT 150, TAC 298 (CR/NC)' },
+          { term: 'Year 1 Spring', load: '16u', courses: 'PPD 240, LAW 210p, GE, BUAD 298 (CR/NC)' },
+          { term: 'Year 2 Fall', load: '16u', courses: 'PPD 303, PPD 315, LAW 306 (AI in Law), Elective' },
+          { term: 'Year 2 Spring', load: '16u', courses: 'PPD 373, LAW 407 (Regulatory Law), PHIL 265g' },
+          { term: 'Year 3 Fall', load: '16u', courses: 'PPD Policy Lab, WRIT 340, LAW 206, Elective' },
+          { term: 'Year 3 Spring', load: '16u', courses: 'PPD Capstone, Internship Credit, Upper-Div' }
+        ]
+      }
+    ];
+
+    const AI_COURSES = [
+      {
+        code: 'BUAD 298',
+        title: 'AI Essentials: Professional Success & Leadership',
+        school: 'Marshall',
+        units: '2 units',
+        category: 'essentials',
+        coding: 'Zero Coding',
+        badges: ['Credit/No Credit', 'Internship Booster'],
+        desc: 'Focused directly on using AI tools in modern workplaces, internships, and team leadership—ideal for resume readiness without technical prerequisites.'
+      },
+      {
+        code: 'TAC 298',
+        title: 'AI Essentials: Techniques and Technologies',
+        school: 'Viterbi / Stevens',
+        units: '2 units',
+        category: 'essentials',
+        coding: 'Zero Coding',
+        badges: ['Credit/No Credit', 'No Prerequisites'],
+        desc: 'Non-technical breakdown of how AI actually works, what it can and cannot do, and how to evaluate AI systems—designed for non-STEM majors.'
+      },
+      {
+        code: 'MDA 298',
+        title: 'AI Essentials: Risks, Rewards & the Human Future',
+        school: 'Dornsife',
+        units: '2 units',
+        category: 'essentials',
+        coding: 'Zero Coding',
+        badges: ['Credit/No Credit', 'Pre-Law Friendly'],
+        desc: 'Interdisciplinary lecture series exploring AI ethics, economics, and societal impact—great talking points for law school personal statements.'
+      },
+      {
+        code: 'MINOR (Gould)',
+        title: 'Law and Regulation of Artificial Intelligence Minor',
+        school: 'USC Gould School of Law',
+        units: '20 units',
+        category: 'minor',
+        coding: 'Zero Coding',
+        badges: ['Top Pre-Law Pick', 'Internship Booster'],
+        desc: 'Includes LAW 210p, LAW 306 (AI in Law & Regulation), plus electives in AI ethics, personal data privacy, and IP law.'
+      },
+      {
+        code: 'MINOR (Marshall)',
+        title: 'Applied AI in Business Minor',
+        school: 'USC Marshall',
+        units: '16–20 units',
+        category: 'minor',
+        coding: 'Low / No-Code',
+        badges: ['High ROI', 'Internship Booster'],
+        desc: 'Practical, career-ready AI strategy and business application skills tailored for students pursuing corporate, consulting, or M&A law.'
+      },
+      {
+        code: 'PHIL 265g',
+        title: 'Ethics, Technology and Value',
+        school: 'Dornsife',
+        units: '4 units',
+        category: 'elective',
+        coding: 'Zero Coding',
+        badges: ['Counts for GE', 'Minor Elective'],
+        desc: 'Examines moral and legal questions surrounding AI, automation, and digital privacy. Double-counts toward GE and the Law & AI Minor.'
+      },
+      {
+        code: 'EIS 370',
+        title: 'Ethical Issues in Artificial Intelligence',
+        school: 'Engineering / Interdisciplinary',
+        units: '4 units',
+        category: 'elective',
+        coding: 'Zero Coding',
+        badges: ['Minor Elective', 'Policy Focus'],
+        desc: 'Deep dive into algorithmic bias, accountability, and AI governance frameworks—highly relevant for tech policy and compliance internships.'
+      }
+    ];
+
+    // =========================================================================
+    // 2. STATE & DOM REFERENCES
+    // =========================================================================
+    let currentFilter = 'all';
+    let manualSelectedMajorId = null;
+
+    const apSlider = document.getElementById('apCreditsSlider');
+    const apInput = document.getElementById('apCreditsInput');
+    const apPolicyText = document.getElementById('apPolicyText');
+
+    const wFast = document.getElementById('weightFastGrad');
+    const wRoi = document.getElementById('weightRoi');
+    const wIntern = document.getElementById('weightInternship');
+    const wAi = document.getElementById('weightAi');
+
+    const valFast = document.getElementById('valFastGrad');
+    const valRoi = document.getElementById('valRoi');
+    const valIntern = document.getElementById('valInternship');
+    const valAi = document.getElementById('valAi');
+
+    const suggestBtn = document.getElementById('suggestBtn');
+
+    // =========================================================================
+    // 3. SCORING & OPTIMIZATION ENGINE
+    // =========================================================================
+    function computeRankedMajors() {
+      const weights = {
+        fast: Number(wFast.value),
+        roi: Number(wRoi.value),
+        intern: Number(wIntern.value),
+        ai: Number(wAi.value)
+      };
+      const totalWeight = weights.fast + weights.roi + weights.intern + weights.ai;
+
+      const apCredits = Math.max(0, Math.min(80, Number(apInput.value) || 0));
+      const appliedAp = Math.min(apCredits, 32);
+      const waiverCredits = Math.max(0, apCredits - 32);
+
+      return USC_MAJORS.map(major => {
+        // Adjust fastGradScore slightly if student has high AP waivers
+        const apBoost = waiverCredits >= 16 ? 0.3 : 0;
+        const effectiveFast = Math.min(10, major.fastGradScore + apBoost);
+
+        const weightedScore = (
+          (effectiveFast * weights.fast) +
+          (major.roiScore * weights.roi) +
+          (major.internshipScore * weights.intern) +
+          (major.aiFitScore * weights.ai)
+        ) / totalWeight;
+
+        const matchPercent = Math.round(weightedScore * 10);
+
+        // Estimate graduation time
+        const unitsLeft = 128 - appliedAp;
+        let gradTime = '4 Years';
+        if (unitsLeft <= 96) {
+          gradTime = (major.units >= 64 && waiverCredits < 12) ? '3.5 Years' : '3 Years';
+        } else if (unitsLeft <= 112) {
+          gradTime = '3.5 Years';
+        }
+
+        return {
+          ...major,
+          matchPercent,
+          gradTime,
+          weights
+        };
+      }).sort((a, b) => b.matchPercent - a.matchPercent);
+    }
+
+    // =========================================================================
+    // 4. RENDERING FUNCTIONS
+    // =========================================================================
+    function updateApCallout() {
+      const ap = Math.max(0, Math.min(80, Number(apInput.value) || 0));
+      const applied = Math.min(ap, 32);
+      const excess = Math.max(0, ap - 32);
+
+      if (ap > 32) {
+        apPolicyText.innerHTML = `USC caps incoming AP/IB exam credit at <strong>32 units</strong> toward the 128-unit degree. Your remaining <strong>${excess} AP credits</strong> still add major value via <strong>GE fulfillment, Foreign Language clearance, and prerequisite waivers</strong>—letting you jump straight into upper-division classes and graduate in 3 years.`;
+      } else if (ap > 0) {
+        apPolicyText.innerHTML = `All <strong>${applied} AP units</strong> apply directly toward your 128-unit USC degree (up to USC's 32-unit cap), and eligible scores of 4 or 5 also clear GE categories and prerequisites.`;
+      } else {
+        apPolicyText.innerHTML = `With 0 incoming AP credits, you will complete all 128 units at USC (typically 4 years at 16 units/semester).`;
+      }
+    }
+
+    function renderTopRecommendation(major, isManualOverride) {
+      const container = document.getElementById('topRecommendationCard');
+      container.classList.remove('fade-in-up');
+      void container.offsetWidth; // trigger reflow for animation
+      container.classList.add('fade-in-up');
+
+      const w = major.weights;
+      const topDrivers = [];
+      if (w.roi >= 7) topDrivers.push(`Strong post-grad ROI (${major.startingSalary})`);
+      if (w.fast >= 7) topDrivers.push(`Lean ${major.units}-unit structure supports ${major.gradTime} graduation`);
+      if (w.intern >= 7) topDrivers.push(`Direct pipeline into ${major.internships}`);
+      if (w.ai >= 7) topDrivers.push(`Seamless fit with ${major.recommendedAiTrack}`);
+      if (topDrivers.length === 0) topDrivers.push(major.summary);
+
+      container.innerHTML = `
+        <div class="bg-gradient-to-r from-usc-cardinal to-usc-cardinalDark px-5 sm:px-6 py-4 flex flex-wrap items-center justify-between gap-2 text-white">
+          <div class="flex items-center gap-2">
+            <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wider bg-usc-gold text-usc-cardinalDark">
+              ${isManualOverride ? 'Selected Preview' : 'Top Recommended Pathway'}
+            </span>
+            <span class="text-xs text-red-100 font-medium">${major.school}</span>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <span class="text-xs text-red-100">Match Score:</span>
+            <span class="text-lg font-extrabold text-usc-gold">${major.matchPercent}%</span>
+          </div>
+        </div>
+
+        <div class="p-5 sm:p-6 space-y-5">
+          <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+            <div>
+              <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
+                ${major.name}
+              </h2>
+              <p class="text-sm font-semibold text-usc-cardinal mt-1 flex items-center gap-1.5">
+                <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg>
+                Paired AI Track: ${major.recommendedAiTrack}
+              </p>
+            </div>
+            <div class="shrink-0 bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-left sm:text-right">
+              <div class="text-[11px] font-semibold uppercase tracking-wider text-slate-500">Est. Post-Grad Salary</div>
+              <div class="text-base sm:text-lg font-extrabold text-emerald-700">${major.startingSalary}</div>
+            </div>
+          </div>
+
+          <p class="text-sm text-slate-600 leading-relaxed">
+            ${major.summary}
+          </p>
+
+          <div class="bg-slate-50 rounded-xl p-4 border border-slate-200/80">
+            <div class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">
+              Why This Pathway Won Based on Your Weights
+            </div>
+            <ul class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm text-slate-700">
+              ${topDrivers.map(d => `
+                <li class="flex items-start gap-2">
+                  <svg class="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                  <span>${d}</span>
+                </li>
+              `).join('')}
+            </ul>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderGraduationOptimizer(major) {
+      const ap = Math.max(0, Math.min(80, Number(apInput.value) || 0));
+      const applied = Math.min(ap, 32);
+      const excess = Math.max(0, ap - 32);
+      const remaining = 128 - applied;
+      const apPct = Math.round((applied / 128) * 100);
+      const remPct = 100 - apPct;
+      const semesters = Math.ceil(remaining / 16);
+
+      document.getElementById('barApLabel').textContent = `${applied} AP Units Applied (${apPct}%)`;
+      document.getElementById('barRemLabel').textContent = `${remaining} Units Remaining at USC (${remPct}%)`;
+      document.getElementById('barApFill').style.width = `${apPct}%`;
+      document.getElementById('barRemFill').style.width = `${remPct}%`;
+
+      document.getElementById('statApApplied').textContent = `${applied} units`;
+      document.getElementById('statApWaivers').textContent = `${excess} credits`;
+      document.getElementById('statUnitsRemaining').textContent = `${remaining} units`;
+      document.getElementById('statSemestersNeeded').textContent = `${semesters} semesters @ ~16 units/term`;
+
+      const badge = document.getElementById('projectedGradBadge');
+      badge.textContent = `${major.gradTime} Track (${semesters} Semesters)`;
+
+      // Render 6-semester plan
+      const planGrid = document.getElementById('semesterPlanGrid');
+      planGrid.innerHTML = major.samplePlan.map(item => `
+        <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 hover:border-usc-cardinal/30 transition-colors">
+          <div class="flex items-center justify-between mb-1.5">
+            <span class="text-xs font-bold text-usc-cardinal">${item.term}</span>
+            <span class="px-2 py-0.5 rounded-md bg-white border border-slate-200 text-[11px] font-semibold text-slate-600">${item.load}</span>
+          </div>
+          <p class="text-xs text-slate-600 leading-relaxed">${item.courses}</p>
+        </div>
+      `).join('');
+    }
+
+    function renderAiCourses() {
+      const grid = document.getElementById('aiCoursesGrid');
+      const filtered = currentFilter === 'all'
+        ? AI_COURSES
+        : AI_COURSES.filter(c => c.category === currentFilter);
+
+      grid.innerHTML = filtered.map(course => `
+        <div class="p-4 rounded-xl border border-slate-200 bg-slate-50/50 hover:bg-white hover:shadow-sm transition-all flex flex-col justify-between gap-3">
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-1.5">
+              <span class="text-xs font-extrabold text-usc-cardinal tracking-wide">${course.code}</span>
+              <span class="text-[11px] font-semibold text-slate-500">${course.school} &bull; ${course.units}</span>
+            </div>
+            <h4 class="text-sm font-bold text-slate-900 leading-snug mb-1.5">${course.title}</h4>
+            <p class="text-xs text-slate-600 leading-relaxed">${course.desc}</p>
+          </div>
+          <div class="flex flex-wrap gap-1.5 pt-1">
+            <span class="px-2 py-0.5 rounded-md text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+              ${course.coding}
+            </span>
+            ${course.badges.map(b => `
+              <span class="px-2 py-0.5 rounded-md text-[11px] font-semibold bg-amber-50 text-amber-800 border border-amber-200">
+                ${b}
+              </span>
+            `).join('')}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderComparisonTable(rankedMajors, activeMajorId) {
+      const tbody = document.getElementById('comparisonTableBody');
+      tbody.innerHTML = rankedMajors.map((m, idx) => {
+        const isActive = m.id === activeMajorId;
+        return `
+          <tr data-major-id="${m.id}" class="major-row cursor-pointer transition-colors ${isActive ? 'bg-red-50/70' : 'hover:bg-slate-50'}">
+            <td class="py-3.5 px-4">
+              <div class="flex items-center gap-2">
+                ${idx === 0 ? '<span class="w-2 h-2 rounded-full bg-usc-cardinal shrink-0" title="Top Match"></span>' : ''}
+                <div>
+                  <div class="font-bold text-slate-900">${m.name}</div>
+                  <div class="text-[11px] text-slate-500">${m.school}</div>
+                </div>
+              </div>
+            </td>
+            <td class="py-3.5 px-3 text-center font-semibold text-slate-700">${m.units}u</td>
+            <td class="py-3.5 px-3 font-semibold text-emerald-700 whitespace-nowrap">${m.startingSalary}</td>
+            <td class="py-3.5 px-3">
+              <span class="px-2 py-0.5 rounded-md text-[11px] font-semibold bg-slate-100 text-slate-700 whitespace-nowrap">${m.gradTime}</span>
+            </td>
+            <td class="py-3.5 px-3 text-xs text-slate-600 max-w-[180px]">${m.internships}</td>
+            <td class="py-3.5 px-3 text-xs font-medium text-slate-700">${m.lsatPrep}</td>
+            <td class="py-3.5 px-4 text-right">
+              <span class="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-extrabold ${idx === 0 ? 'bg-usc-cardinal text-usc-gold' : 'bg-slate-100 text-slate-700'}">
+                ${m.matchPercent}%
+              </span>
+            </td>
+          </tr>
+        `;
+      }).join('');
+
+      // Attach row click handlers
+      document.querySelectorAll('.major-row').forEach(row => {
+        row.addEventListener('click', () => {
+          manualSelectedMajorId = row.getAttribute('data-major-id');
+          runSuggestor(false);
+        });
+      });
+    }
+
+    function runSuggestor(resetManual = true) {
+      if (resetManual) manualSelectedMajorId = null;
+      const ranked = computeRankedMajors();
+      const activeMajor = manualSelectedMajorId
+        ? (ranked.find(m => m.id === manualSelectedMajorId) || ranked[0])
+        : ranked[0];
+
+      renderTopRecommendation(activeMajor, Boolean(manualSelectedMajorId && manualSelectedMajorId !== ranked[0].id));
+      renderGraduationOptimizer(activeMajor);
+      renderComparisonTable(ranked, activeMajor.id);
+    }
+
+    // =========================================================================
+    // 5. EVENT LISTENERS
+    // =========================================================================
+    // Sync AP slider & number input
+    apSlider.addEventListener('input', () => {
+      apInput.value = apSlider.value;
+      updateApCallout();
+    });
+    apInput.addEventListener('input', () => {
+      const clamped = Math.max(0, Math.min(80, Number(apInput.value) || 0));
+      apSlider.value = clamped;
+      updateApCallout();
+    });
+
+    // Weight slider labels
+    [
+      [wFast, valFast],
+      [wRoi, valRoi],
+      [wIntern, valIntern],
+      [wAi, valAi]
+    ].forEach(([slider, label]) => {
+      slider.addEventListener('input', () => {
+        label.textContent = `${slider.value} / 10`;
+      });
+    });
+
+    // Priority Presets
+    document.querySelectorAll('.preset-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const preset = btn.getAttribute('data-preset');
+        if (preset === 'balanced') {
+          wFast.value = 8; wRoi.value = 8; wIntern.value = 8; wAi.value = 8;
+        } else if (preset === 'fast') {
+          wFast.value = 10; wRoi.value = 6; wIntern.value = 7; wAi.value = 8;
+        } else if (preset === 'roi') {
+          wFast.value = 5; wRoi.value = 10; wIntern.value = 10; wAi.value = 8;
+        }
+        valFast.textContent = `${wFast.value} / 10`;
+        valRoi.textContent = `${wRoi.value} / 10`;
+        valIntern.textContent = `${wIntern.value} / 10`;
+        valAi.textContent = `${wAi.value} / 10`;
+        runSuggestor(true);
+      });
+    });
+
+    // Primary Suggest Button
+    suggestBtn.addEventListener('click', () => {
+      runSuggestor(true);
+      if (window.innerWidth < 1024) {
+        document.getElementById('resultsDashboard').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+
+    // AI Coursework Filter Buttons
+    document.querySelectorAll('.ai-filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        currentFilter = btn.getAttribute('data-filter');
+        document.querySelectorAll('.ai-filter-btn').forEach(b => {
+          b.className = 'ai-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition-colors cursor-pointer';
+        });
+        btn.className = 'ai-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-usc-cardinal text-white transition-colors cursor-pointer';
+        renderAiCourses();
+      });
+    });
+
+    // DigitalOcean Modal Controls
+    const deployModal = document.getElementById('deployModal');
+    const openModal = () => {
+      deployModal.classList.remove('hidden');
+      deployModal.classList.add('flex');
+    };
+    const closeModal = () => {
+      deployModal.classList.add('hidden');
+      deployModal.classList.remove('flex');
+    };
+
+    document.getElementById('openDeployModalBtn').addEventListener('click', openModal);
+    document.getElementById('closeDeployModalBtn').addEventListener('click', closeModal);
+    document.getElementById('doneDeployModalBtn').addEventListener('click', closeModal);
+    deployModal.addEventListener('click', (e) => {
+      if (e.target === deployModal) closeModal();
+    });
+
+    // Copy to clipboard using execCommand for iframe compatibility
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const targetId = btn.getAttribute('data-copy-target');
+        const text = document.getElementById(targetId).innerText;
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
+        document.body.appendChild(textarea);
+        textarea.select();
+        try {
+          document.execCommand('copy');
+          const orig = btn.textContent;
+          btn.textContent = 'Copied!';
+          btn.classList.add('bg-emerald-600');
+          setTimeout(() => {
+            btn.textContent = orig;
+            btn.classList.remove('bg-emerald-600');
+          }, 1800);
+        } catch (err) {
+          btn.textContent = 'Select & Copy';
+        }
+        document.body.removeChild(textarea);
+      });
+    });
+
+    // Initial Render on Load
+    updateApCallout();
+    renderAiCourses();
+    runSuggestor(true);
+  </script>
+</body>
+</html>
